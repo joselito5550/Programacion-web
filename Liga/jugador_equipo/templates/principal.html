@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <link rel="icon" href="../../favicon.ico">
+      <style media="screen">
+            body {
+                  padding-bottom: 20px;
+            }
+
+            .navbar {
+                  margin-bottom: 20px;
+            }
+      </style>
+      <title>Tuliga</title>
+
+      <!-- Latest compiled and minified CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+      <!-- Optional theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+
+<body>
+
+      <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                  <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                              <span class="sr-only">Toggle navigation</span>
+                              <!-- <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> -->
+                        </button>
+                        <a class="navbar-brand" href="/index">TULIGA</a>
+                  </div>
+                  <div id="navbar" class="navbar-collapse collapse">
+                        {% if user.is_authenticated %}
+                        <p class="navbar-text navbar-right"><a href="/cerrar">Cerrar sesion</a></p>
+                        <ul class="nav navbar-nav">
+                              <li class="active"><a href="#">Home</a></li>
+                              <li><a href="/ver_equipos">Ver equipos</a></li>
+                              <li><a href="/ver_jornadas">Ver Jornadas</a></li>
+                              <li><a href="#">Contacto</a></li>
+
+                        </ul>
+
+                        {% else %}
+
+                        <div class="navbar-right">
+                              <button type="button" class="btn btn-primary" href="/inicio_sesion" name="button"><a href="/inicio_sesion">Iniciar Sesion</a></button>
+
+                        </div>
+                        {% endif %}
+                  </div>
+                  <!--/.navbar-collapse -->
+            </div>
+      </nav>
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+            <div class="container">
+
+                  <h1>Bienvenido {{user.username}}</h1>
+                  <p>MiLiga es tu página web ideal para la gestión de tu propia liga en tu localidad. Podrás crear y gestionar tu propio equipo y crear una liga para que se unan los demas equipos y poder tener una clasificación.</p>
+                  {% if user.is_authenticated%}
+                  <p><a class="btn btn-primary btn-lg" href="/registrar_equipo" role="button">Registrar un equipo &raquo;</a></p>
+                  <p><a class="btn btn-primary btn-lg" href="/registrar_liga" role="button">Registrar una Liga &raquo;</a></p>
+                  <button type="button " class="btn navbar-btn btn-navy" data-toggle="modal" data-target="#myModal">Sign in</button>
+                  <!--<a class="btn btn-primary" role="button" href="/ver_equipos">Ver equipos</a>  -->
+
+                  {%endif%}
+            </div>
+      </div>
+      <!— Modal —>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                              </button>
+                              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                              ...
+                        </div>
+                        <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+
+      <div class="container">
+            <!-- Example row of columns -->
+            {% if user.is_authenticated %}
+            <div class="row">
+                  <div class="col-md-6">
+                        <h2>Clasificacion Liga "{{context.usuario.equipo.Liga.nombre}}"</h2>
+                        {%for equipo_aux in context.equipos%}
+                        <p>{{equipo_aux.nombre}} {{equipo_aux.puntos}}</p>
+                        {%endfor%}
+                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+                  </div>
+                  <!-- <div class="col-md-6">
+                        <h2>Calendario</h2>
+                        <p>Inicia sesion para poder ver el calendario</p>
+                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                  </div> -->
+            </div>
+            {% endif %}
+      </div>
+
+      <hr>
+
+      <footer>
+            <p>&copy; Joselito5550 2015</p>
+      </footer>
+
+      </div>
+      <!-- /container -->
+
+
+      <!-- Bootstrap core JavaScript
+    ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="../../dist/js/bootstrap.min.js"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {%block content%}
+<style media="screen">
+      .helptext {
+            display: none;
+      }
+
+      .form1 {
+            margin-left: 25vh;
+      }
+</style>
+<form class="form-inline" role="form" method="POST"> {% csrf_token %}
+            {{form.as_p}}
+            <input class="btn btn-primary" type="submit" value="Registrar_equipo">
+</form>
+
+{%endblock%}
