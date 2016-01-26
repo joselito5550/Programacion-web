@@ -76,36 +76,16 @@
                   {% if user.is_authenticated%}
                   <p><a class="btn btn-primary btn-lg" href="/registrar_equipo" role="button">Registrar un equipo &raquo;</a></p>
                   <p><a class="btn btn-primary btn-lg" href="/registrar_liga" role="button">Registrar una Liga &raquo;</a></p>
-                  <button type="button " class="btn navbar-btn btn-navy" data-toggle="modal" data-target="#myModal">Sign in</button>
                   <!--<a class="btn btn-primary" role="button" href="/ver_equipos">Ver equipos</a>  -->
 
                   {%endif%}
             </div>
       </div>
-      <!— Modal —>
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                        <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                              </button>
-                              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                              ...
-                        </div>
-                        <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                              <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                  </div>
-            </div>
-      </div>
+
 
       <div class="container">
             <!-- Example row of columns -->
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated %} {% if context.tiene_equipo%}
             <div class="row">
                   <div class="col-md-6">
                         <h2>Clasificacion Liga "{{context.usuario.equipo.Liga.nombre}}"</h2>
@@ -115,13 +95,33 @@
                         <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
 
                   </div>
-                  <!-- <div class="col-md-6">
-                        <h2>Calendario</h2>
-                        <p>Inicia sesion para poder ver el calendario</p>
+                  {% else %}
+                  <div class="row">
+                        <div class="col-md-6">
+                              <h2>Unete a algun equipo</h2>
+                              <form class="" action="/unirte_equipo" method="POST">
+                                    {% csrf_token %}
+                                    <select method="POST" class="form-control" name="nombre_equipo">
+                                          {% for equipos in context.todos_equipos%}
+                                          <option>{{equipos.nombre}}</option>
+                                          {%endfor%}
+                                    </select>
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                              </form>
+                        </div>
+                  </div>
+                  {%endif%}
+
+                  {%if context.administrador_equipo%}
+                  <div class="col-md-6">
+                        <h2>Jugadores de tu equipo</h2>
+                        {% for jugador in context.jugadores%}
+                        <p>{{jugador.usuario.username}}</p>
+                        {%endfor%}
                         <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                  </div> -->
+                  </div>
             </div>
-            {% endif %}
+            {% endif %} {% endif %}
       </div>
 
       <hr>

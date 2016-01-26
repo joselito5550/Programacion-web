@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^registrar_liga$', Registrar_liga.as_view(), name='registrar_liga'),
     url(r'^crear_jornadas/$', Registrar_jornadas.as_view(), name = 'registrar_jornada'),
     url(r'^ver_equipos$', views.ver_equipos),
-    # url(r'^/unirte_equipo$', views.unirte_equipo),
+    url(r'^unirte_equipo$', views.unirte_equipo),
 ]

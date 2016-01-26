@@ -25,7 +25,13 @@ class Jornada(models.Model):
     equipo2 = models.ForeignKey('jugador_equipo.Equipo', related_name='segundo_equipo+',null=True)
     numero = models.IntegerField(null=True)
     fecha = models.DateTimeField(null=True)
-    ida_vuelta = models.CharField(max_length=10, default="ida")
+    ida = 'ida'
+    vuelta = 'vuelta'
+    ida_vuelta_choice = (
+    (ida , 'ida'),
+    (vuelta , 'vuelta'),
+    )
+    ida_vuelta = models.CharField(max_length=10, choices=ida_vuelta_choice,default="ida")
 
     def __str__(self):
         return self.equipo1.nombre+' vs '+self.equipo2.nombre
