@@ -6,13 +6,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from .models import Liga, Jornada
 from .form import LigaForm, JornadaForm
+from django.shortcuts import redirect
+
 
 # Create your views here.
 class Registrar_liga(FormView):
     model = Liga
     template_name = "registrar_liga.html"
     form_class = LigaForm
-    success_url = reverse_lazy('index/')
+    success_url = reverse_lazy('index')
 
     def form_valid(self, form):
         liga = form.save()
@@ -46,3 +48,17 @@ def buscar_liga(request,nombre_liga):
         return render(request,'visualizar_liga',{'equipos':equipos_liga})
     else:
         return render(request,'principal.html',{})
+
+def buscarLiga(request):
+    if request.method == 'POST':
+        print request.POST.get('nombre_liga')
+        nombre_liga = request.POST.get('nombre_liga')
+        if Liga.objects.filter(nombre=nombre_liga).exists():
+            liga = Liga.objects.get(nombre=nombre_liga)
+            equipos_liga = Equipo.objects.filter(Liga=liga)
+            return render(request,'visualizar_liga.html',{'equipos':equipos_liga})
+        else:
+            return redirect('/index')
+    else:
+
+        return redirect('/index')

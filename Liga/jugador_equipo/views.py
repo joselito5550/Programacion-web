@@ -115,8 +115,3 @@ def unirte_equipo(request):
     else:
         print "not request POST"
         return render(request, 'principal.html', {'context': context})
-
-
-def buscar_liga(request, nombreLiga):
-    print nombreLiga
-    return render(request, 'principal.html', {'context': context})

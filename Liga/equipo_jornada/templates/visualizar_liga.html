@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {%block content%}
+<style media="screen">
+      .helptext {
+            display: none;
+      }
+</style>
+
+{%for equipo in equipos%}
+<h2>Nombre: {{equipo.nombre}}</h2>
+<h3>Liga: {{equipo.Liga.nombre}}</h3>
+
+{%endfor%}
+{%endblock%}

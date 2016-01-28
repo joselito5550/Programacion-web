@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from jugador_equipo import views
-from equipo_jornada.views import Registrar_liga, administrar_liga, crear_jornadas, Registrar_jornadas, buscar_liga
+from equipo_jornada.views import Registrar_liga, administrar_liga, crear_jornadas, Registrar_jornadas, buscar_liga, buscarLiga
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^ver_equipos$', views.ver_equipos),
     url(r'^unirte_equipo$', views.unirte_equipo),
     url(r'^buscar_liga/(?P<nombre_liga>\w+)', buscar_liga),
+    url(r'^buscarLiga/$', buscarLiga)
 ]
