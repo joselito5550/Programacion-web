@@ -35,3 +35,14 @@ def administrar_liga(request):
 
 def crear_jornadas(request):
     return render(request,'administrador_liga.html', {})
+
+# echarle un ojo para ver si funciona bien
+def buscar_liga(request,nombre_liga):
+    print nombre_liga
+    if Liga.objects.filter(nombre=nombre_liga).exists():
+        liga = Liga.objects.get(nombre=nombre_liga)
+        print liga.nombre
+        equipos_liga = Equipo.objects.filter(Liga=liga)
+        return render(request,'visualizar_liga',{'equipos':equipos_liga})
+    else:
+        return render(request,'principal.html',{})

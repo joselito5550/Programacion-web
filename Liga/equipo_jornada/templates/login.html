@@ -85,7 +85,6 @@
             <h1>Estas logueado</h1>
             {%else%}
             <form class="form-signin" action="/login" method="POST">
-                  {% csrf_token %}
                   <h2 class="form-signin-heading">Iniciar Sesion</h2>
                   <label for="inputEmail" class="sr-only">User</label>
                   <input type="text" class="form-control" placeholder="usuario" name="usuario">
@@ -93,7 +92,9 @@
                   <input type="password" class="form-control" name="password" placeholder="Password" required>
 
                   <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                  <button class="btn btn-lg btn-primary btn-block" type="button"><a href="/registro">Registrarse</a></button>
+                  <br>
+                  <p><a class="btn btn-lg btn-primary btn-block" href="/registro" role="button">Registrarse&raquo;</a></p>
+                  <!-- <button class="btn btn-lg btn-primary btn-block" type="button"><a href="/registro">Registrarse</a></button> -->
 
             </form>
             {%endif%}
