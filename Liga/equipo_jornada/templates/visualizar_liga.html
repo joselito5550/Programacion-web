@@ -6,8 +6,6 @@
 </style>
 
 {%for equipo in equipos%}
-<h2>Nombre: {{equipo.nombre}}</h2>
-<h3>Liga: {{equipo.Liga.nombre}}</h3>
-
+<h2>Nombre: {{equipo.nombre}} Puntos: {{equipo.puntos}}</h2>
 {%endfor%}
 {%endblock%}

@@ -18,7 +18,7 @@ class Registrar_liga(FormView):
 
     def form_valid(self, form):
         liga = form.save()
-        return super(Registrar_liga, self).form_valid(form)
+        return redirect('/index')
 
 
 class Registrar_jornadas(FormView):
@@ -29,7 +29,7 @@ class Registrar_jornadas(FormView):
 
     def form_valid(self, form):
         jornada = form.save()
-        return super(Registrar_jornadas, self).form_valid(form)
+        return redirect('/index')
 
 def administrar_liga(request):
 

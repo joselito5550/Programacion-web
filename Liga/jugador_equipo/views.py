@@ -29,10 +29,11 @@ def login(request):
             if user.is_active:
                 auth_login(request, user)
                 context['usuario'] = Perfiles.objects.get(usuario=request.user)
+                return render(request, 'principal.html', {'context': context})
         else:
             context['mensaje'] = 'Nombre de usuario y/o password incorrectos.'
             context['tipoMensaje'] = 2
-    return render(request, 'principal.html', {'context': context})
+    return render(request, 'login.html', {'context': context})
 
 @login_required
 def cerrar(request):
@@ -56,7 +57,7 @@ class Registrarse(FormView):
         perfil.telefono = form.cleaned_data['telefono']
         perfil.equipo = form.cleaned_data['equipo']
         perfil.save()
-        return super(Registrarse, self).form_valid(form)
+        return redirect('/index')
 
 
 class Registrar_equipo(FormView):
@@ -67,13 +68,12 @@ class Registrar_equipo(FormView):
 
     def form_valid(self, form):
         equipo = form.save()
-        return super(Registrar_equipo, self).form_valid(form)
+        return redirect('/index')
 
 
 def index(request):
     context['todos_equipos'] = Equipo.objects.all()
     if request.user.is_authenticated():
-        print "hola joselito"
         context['usuario'] = Perfiles.objects.get(usuario=request.user)
         if context['usuario'].equipo:
             context['equipos'] = Equipo.objects.filter(

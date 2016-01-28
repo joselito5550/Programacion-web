@@ -5,16 +5,11 @@
       }
 </style>
 
-{%if exists_equipo%} {%for equipo in equipos%}
 <h1>Tu equipo es : {{perfiles.equipo.nombre}}</h1>
+{%if exists_equipo%} {%for equipo in equipos%}
 <h2>Nombre: {{equipo.nombre}}</h2>
 <h3>Liga: {{equipo.Liga.nombre}}</h3>
-<div class="input-group">
-      <input type="text" class="form-control">
-      <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Buscar</button>
-      </span>
-</div>
+
 {%endfor%} {%else%}
 <h1>NO HAY EQUIPOS JODER, CREA UNO</h1>
 {%endif%} {%endblock%}
