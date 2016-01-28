@@ -85,7 +85,6 @@
             <h1>Estas logueado</h1>
             {%else%}
             <form class="form-signin" action="/login" method="POST">
-                  {% csrf_token %}
                   <h2 class="form-signin-heading">Iniciar Sesion</h2>
                   <label for="inputEmail" class="sr-only">User</label>
                   <input type="text" class="form-control" placeholder="usuario" name="usuario">

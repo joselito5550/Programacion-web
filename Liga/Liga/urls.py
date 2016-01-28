@@ -20,15 +20,16 @@ from equipo_jornada.views import Registrar_liga, administrar_liga, crear_jornada
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^inicio_sesion$',views.inicio_sesion),
-    url(r'^login$',views.login),
-    url(r'^index$',views.index),
-    url(r'^cerrar$',views.cerrar),
+    url(r'^inicio_sesion$', views.inicio_sesion),
+    url(r'^login$', views.login),
+    url(r'^index$', views.index),
+    url(r'^cerrar$', views.cerrar),
     url(r'^registro$', views.Registrarse.as_view(), name='registrarse'),
     url(r'^registrar_equipo$', views.Registrar_equipo.as_view(),
         name='registrar_equipo'),
     url(r'^registrar_liga$', Registrar_liga.as_view(), name='registrar_liga'),
-    url(r'^crear_jornadas/$', Registrar_jornadas.as_view(), name = 'registrar_jornada'),
+    url(r'^crear_jornadas/$', Registrar_jornadas.as_view(), name='registrar_jornada'),
     url(r'^ver_equipos$', views.ver_equipos),
     url(r'^unirte_equipo$', views.unirte_equipo),
+    url(r'^buscar_liga/$', views.buscar_liga),
 ]

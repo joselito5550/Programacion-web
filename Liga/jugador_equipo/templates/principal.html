@@ -110,9 +110,7 @@
                               </form>
                         </div>
                   </div>
-                  {%endif%}
-
-                  {%if context.administrador_equipo%}
+                  {%endif%} {%if context.administrador_equipo%}
                   <div class="col-md-6">
                         <h2>Jugadores de tu equipo</h2>
                         {% for jugador in context.jugadores%}

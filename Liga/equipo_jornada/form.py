@@ -11,11 +11,11 @@ class LigaForm(ModelForm):
     class Meta:
         model = Liga
         fields = ('nombre', 'ciudad', 'anio_creacion', 'descripcion',
-                  'administrador')
+                  'administrador','contrasena')
 
 
 class JornadaForm(ModelForm):
 
     class Meta:
         model = Jornada
-        fields = ('equipo1', 'equipo2', 'numero','fecha','ida_vuelta')
+        fields = ('equipo1', 'equipo2', 'numero', 'fecha', 'ida_vuelta')

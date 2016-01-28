@@ -6,13 +6,14 @@ from jugador_equipo.form import UserForm, EquipoForm
 from .models import Perfiles, Equipo
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 context = {}
 # Create your views here.
 
 
 def inicio_sesion(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         context['logueado'] = True
     else:
         context['logueado'] = False
@@ -33,9 +34,9 @@ def login(request):
             context['tipoMensaje'] = 2
     return render(request, 'principal.html', {'context': context})
 
-
+@login_required
 def cerrar(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         logout(request)
         context['mensaje'] = "Cerrada sesion"
     else:
@@ -71,23 +72,23 @@ class Registrar_equipo(FormView):
 
 def index(request):
     context['todos_equipos'] = Equipo.objects.all()
-
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
+        print "hola joselito"
         context['usuario'] = Perfiles.objects.get(usuario=request.user)
         if context['usuario'].equipo:
             context['equipos'] = Equipo.objects.filter(
                 Liga=context['usuario'].equipo.Liga)
             context['tiene_equipo'] = True
+            if request.user == context['usuario'].equipo.administrador:
+                context['administrador_equipo'] = True
+                context['jugadores'] = Perfiles.objects.filter(
+                    equipo=context['usuario'].equipo)
+            else:
+                context['administrador_equipo'] = False
+                print context['administrador_equipo']
         else:
             context['equipo'] = "nada"
             context['tiene_equipo'] = False
-    if request.user == context['usuario'].equipo.administrador:
-        context['administrador_equipo'] = True
-        context['jugadores'] = Perfiles.objects.filter(
-            equipo=context['usuario'].equipo)
-    else:
-        context['administrador_equipo'] = False
-    print context['administrador_equipo']
     return render(request, 'principal.html', {'context': context})
 
 
@@ -114,3 +115,8 @@ def unirte_equipo(request):
     else:
         print "not request POST"
         return render(request, 'principal.html', {'context': context})
+
+
+def buscar_liga(request, nombreLiga):
+    print nombreLiga
+    return render(request, 'principal.html', {'context': context})

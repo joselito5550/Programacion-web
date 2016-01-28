@@ -17,4 +17,4 @@ class EquipoForm(ModelForm):
     class Meta:
         model = Equipo
         fields = ('nombre', 'ciudad', 'anio_creacion', 'descripcion',
-                  'nombre_del_entrenador', 'administrador', 'Liga')
+                  'nombre_del_entrenador', 'administrador', 'Liga', 'contrasena')
