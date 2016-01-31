@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^inicio_sesion$', views.inicio_sesion),
     url(r'^login$', views.login),
-    url(r'^index$', views.index),
+    url(r'^$', views.index),
     url(r'^cerrar$', views.cerrar),
     url(r'^registro$', views.Registrarse.as_view(), name='registrarse'),
     url(r'^registrar_equipo$', views.Registrar_equipo.as_view(),
@@ -32,5 +32,8 @@ urlpatterns = [
     url(r'^ver_equipos$', views.ver_equipos),
     url(r'^unirte_equipo$', views.unirte_equipo),
     url(r'^buscar_liga/(?P<nombre_liga>\w+)', buscar_liga),
-    url(r'^buscarLiga/$', buscarLiga)
-]
+    url(r'^buscarLiga/$', buscarLiga),
+    url(r'^jornadas$', views.crear_jornadas),
+    url(r'^crear_una_jornada$', views.crear_una_jornada),
+    url(r'^resultado_jornada$', views.resultado_jornada)
+    ]

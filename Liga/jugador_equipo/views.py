@@ -4,6 +4,7 @@ from django.contrib.auth import login as auth_login
 from django.views.generic import TemplateView, FormView
 from jugador_equipo.form import UserForm, EquipoForm
 from .models import Perfiles, Equipo
+from equipo_jornada.models import Liga, Jornada
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -29,11 +30,12 @@ def login(request):
             if user.is_active:
                 auth_login(request, user)
                 context['usuario'] = Perfiles.objects.get(usuario=request.user)
-                return render(request, 'principal.html', {'context': context})
+                return redirect('/')
         else:
             context['mensaje'] = 'Nombre de usuario y/o password incorrectos.'
             context['tipoMensaje'] = 2
     return render(request, 'login.html', {'context': context})
+
 
 @login_required
 def cerrar(request):
@@ -57,18 +59,18 @@ class Registrarse(FormView):
         perfil.telefono = form.cleaned_data['telefono']
         perfil.equipo = form.cleaned_data['equipo']
         perfil.save()
-        return redirect('/index')
+        return redirect('/')
 
 
 class Registrar_equipo(FormView):
     model = Equipo
     template_name = "registrar_equipo.html"
     form_class = EquipoForm
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('/')
 
     def form_valid(self, form):
         equipo = form.save()
-        return redirect('/index')
+        return redirect('/')
 
 
 def index(request):
@@ -86,6 +88,10 @@ def index(request):
             else:
                 context['administrador_equipo'] = False
                 print context['administrador_equipo']
+            if request.user == context['usuario'].equipo.Liga.administrador:
+                context['es_administrador_liga'] = True
+            else:
+                context['es_administrador_liga'] = False
         else:
             context['equipo'] = "nada"
             context['tiene_equipo'] = False
@@ -115,3 +121,55 @@ def unirte_equipo(request):
     else:
         print "not request POST"
         return render(request, 'principal.html', {'context': context})
+
+
+def crear_jornadas(request):
+    liga = Liga.objects.get(administrador=request.user)
+    if liga is not None:
+        equipos = Equipo.objects.filter(Liga=liga)
+        context['equipos_jornadas'] = equipos
+        return render(request, 'crear_jornadas.html', {'context': context})
+    else:
+        return redirect('/')
+
+
+def crear_una_jornada(request):
+    if request.method == "POST":
+        nombre_equipo_1 = request.POST.get('nombre_equipo_1')
+        nombre_equipo_2 = request.POST.get('nombre_equipo_2')
+        jornada = Jornada()
+        jornada.equipo1 = Equipo.objects.get(nombre=nombre_equipo_1)
+        jornada.equipo2 = Equipo.objects.get(nombre=nombre_equipo_2)
+        jornada.numero = 2
+        jornada.fecha = request.POST.get('fecha')
+        jornada.Liga = context['usuario'].equipo.Liga
+        jornada.save()
+        return redirect('/')
+
+
+def resultado_jornada(request):
+    if request.method == "POST":
+        jornada = Jornada.objects.get(id=request.POST.get('id_jornada'))
+        jornada.goles_primer_equipo = request.POST.get('resultado_equipo1')
+        jornada.goles_segundo_equipo = request.POST.get('resultado_equipo2')
+        jornada.save()
+        equipo1 = Equipo.objects.get(nombre=jornada.equipo1)
+        equipo2 = Equipo.objects.get(nombre=jornada.equipo2)
+        if jornada.goles_primer_equipo>jornada.goles_segundo_equipo:
+            equipo1.puntos = equipo1.puntos+3
+            equipo1.save()
+            return redirect('/')
+        if jornada.goles_primer_equipo<jornada.goles_segundo_equipo:
+            equipo2.puntos = equipo2.puntos+3
+            equipo2.save()
+            return redirect('/')
+        if jornada.goles_primer_equipo==jornada.goles_segundo_equipo:
+            equipo2.puntos = equipo2.puntos+1
+            equipo1.puntos = equipo1.puntos+1
+            equipo2.save()
+            equipo1.save()
+            return redirect('/')
+    else:
+        context['jornadas'] = Jornada.objects.filter(
+            Liga=Liga.objects.get(administrador=request.user))
+        return render(request, 'resultado_jornada.html', {'context': context})

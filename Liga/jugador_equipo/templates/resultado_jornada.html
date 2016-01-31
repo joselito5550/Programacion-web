@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {%block content%}
+<style media="screen">
+      .helptext {
+            display: none;
+      }
+</style>
+<p>
+<form class="" action="/resultado_jornada" method="POST">
+      {% csrf_token %}
+      <select class="form-control" name="id_jornada">
+            {%for jornada in context.jornadas%}
+            <option value={{jornada.id}}>{{jornada.equipo1}} vs {{jornada.equipo2}}</option>
+            {%endfor%}
+      </select>
+      <input type="number" name="resultado_equipo1">
+      <input type="number" name="resultado_equipo2">
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+</form>
+
+</p>
+
+
+
+<div class="checkbox">
+      <label>
+            <input type="checkbox" value=""> Ida y vuelta
+      </label>
+</div>
+{%endblock%}

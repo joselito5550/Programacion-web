@@ -38,6 +38,8 @@ class Jornada(models.Model):
     ida_vuelta = models.CharField(
         max_length=10, choices=ida_vuelta_choice, default="ida")
     Liga = models.ForeignKey(Liga, null=True)
+    goles_primer_equipo= models.IntegerField(null=True)
+    goles_segundo_equipo = models.IntegerField(null =True)
 
     def __str__(self):
         return self.equipo1.nombre + ' vs ' + self.equipo2.nombre

@@ -18,7 +18,7 @@ class Registrar_liga(FormView):
 
     def form_valid(self, form):
         liga = form.save()
-        return redirect('/index')
+        return redirect('/')
 
 
 class Registrar_jornadas(FormView):
@@ -29,7 +29,7 @@ class Registrar_jornadas(FormView):
 
     def form_valid(self, form):
         jornada = form.save()
-        return redirect('/index')
+        return redirect('/')
 
 def administrar_liga(request):
 
@@ -58,7 +58,7 @@ def buscarLiga(request):
             equipos_liga = Equipo.objects.filter(Liga=liga)
             return render(request,'visualizar_liga.html',{'equipos':equipos_liga})
         else:
-            return redirect('/index')
+            return redirect('/')
     else:
 
-        return redirect('/index')
+        return redirect('/')

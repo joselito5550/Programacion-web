@@ -42,7 +42,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span> -->
                         </button>
-                        <a class="navbar-brand" href="/index">TULIGA</a>
+                        <a class="navbar-brand" href="/">TULIGA</a>
                   </div>
                   <div id="navbar" class="navbar-collapse collapse">
                         {% if user.is_authenticated %}
@@ -76,6 +76,10 @@
                   {% if user.is_authenticated%}
                   <p><a class="btn btn-primary btn-lg" href="/registrar_equipo" role="button">Registrar un equipo &raquo;</a></p>
                   <p><a class="btn btn-primary btn-lg" href="/registrar_liga" role="button">Registrar una Liga &raquo;</a></p>
+                  {% if context.es_administrador_liga%}
+                  <p><a class="btn btn-default" href="/jornadas" role="button">Crear las jornadas&raquo;</a></p>
+                  <p><a class="btn btn-default" href="/resultado_jornada" role="button">Añadir resultado&raquo;</a></p>
+                  {%endif%}
                   <!--<a class="btn btn-primary" role="button" href="/ver_equipos">Ver equipos</a>  -->
 
                   {%endif%}
@@ -116,7 +120,6 @@
                         {% for jugador in context.jugadores%}
                         <p>{{jugador.usuario.username}}</p>
                         {%endfor%}
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                   </div>
             </div>
             {% endif %} {% endif %}

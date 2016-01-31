@@ -4,9 +4,31 @@
             display: none;
       }
 </style>
-<form method="POST"> {% csrf_token %} {{form.as_p}}
-      <input class="btn btn-primary" type="submit" value="Registrar_jornadas">
+<p>
+<form class="" action="/crear_una_jornada" method="POST">
+      {% csrf_token %}
+      <select class="form-control" name="nombre_equipo_1">
+            {%for equipo_aux in context.equipos_jornadas%}
+            <option>{{equipo_aux.nombre}}</option>
+            {%endfor%}
+      </select>
+      <h3>vs</h3>
+      <select class="form-control" name="nombre_equipo_2" >
+            {%for equipo_aux in context.equipos_jornadas%}
+            <option>{{equipo_aux.nombre}}</option>
+            {%endfor%}
+      </select>
+      <input type="date" name="fecha"/>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 
+</p>
 
+
+
+<div class="checkbox">
+      <label>
+            <input type="checkbox" value=""> Ida y vuelta
+      </label>
+</div>
 {%endblock%}
