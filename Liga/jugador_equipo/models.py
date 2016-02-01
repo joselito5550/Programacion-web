@@ -18,7 +18,7 @@ class Equipo(models.Model):
 
 
     def __str__(self):
-        return self.nombre  
+        return self.nombre
 
     class Meta:
         ordering = ['nombre']
@@ -27,7 +27,7 @@ class Equipo(models.Model):
 class Perfiles(models.Model):
     usuario = models.OneToOneField(User)
     telefono = models.IntegerField()
-    equipo = models.ForeignKey(Equipo, null=True, blank=True)
+    equipo = models.ForeignKey(Equipo,null=True,blank=True)
 
     def __unicode__(self):
         return self.usuario.username

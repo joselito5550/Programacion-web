@@ -51,15 +51,17 @@
                               <li class="active"><a href="#">Home</a></li>
                               <li><a href="/ver_equipos">Ver equipos</a></li>
                               <li><a href="/ver_jornadas">Ver Jornadas</a></li>
-                              <li><a href="#">Contacto</a></li>
+                              {% if not context.tiene_equipo%}
+                              <li><a href="/registrar_equipo">Registrar un equipo</a></li>
+                              {%endif%}
+                              <li><a href="/registrar_liga">Registrar una liga</a></li>
 
                         </ul>
 
                         {% else %}
 
                         <div class="navbar-right">
-                              <button type="button" class="btn btn-primary" href="/inicio_sesion" name="button"><a href="/inicio_sesion">Iniciar Sesion</a></button>
-
+                              <p><a class="btn btn-lg btn-primary btn-block" href="/inicio_sesion" role="button">Iniciar sesion</a></p>
                         </div>
                         {% endif %}
                   </div>
@@ -73,16 +75,12 @@
 
                   <h1>Bienvenido {{user.username}}</h1>
                   <p>MiLiga es tu página web ideal para la gestión de tu propia liga en tu localidad. Podrás crear y gestionar tu propio equipo y crear una liga para que se unan los demas equipos y poder tener una clasificación.</p>
-                  {% if user.is_authenticated%}
-                  <p><a class="btn btn-primary btn-lg" href="/registrar_equipo" role="button">Registrar un equipo &raquo;</a></p>
-                  <p><a class="btn btn-primary btn-lg" href="/registrar_liga" role="button">Registrar una Liga &raquo;</a></p>
+
                   {% if context.es_administrador_liga%}
                   <p><a class="btn btn-default" href="/jornadas" role="button">Crear las jornadas&raquo;</a></p>
                   <p><a class="btn btn-default" href="/resultado_jornada" role="button">Añadir resultado&raquo;</a></p>
                   {%endif%}
                   <!--<a class="btn btn-primary" role="button" href="/ver_equipos">Ver equipos</a>  -->
-
-                  {%endif%}
             </div>
       </div>
 
@@ -114,7 +112,7 @@
                               </form>
                         </div>
                   </div>
-                  {%endif%} {%if context.administrador_equipo%}
+                  {%endif%} {%if context.tiene_equipo%}
                   <div class="col-md-6">
                         <h2>Jugadores de tu equipo {{context.usuario.equipo.nombre}}</h2>
                         {% for jugador in context.jugadores%}
@@ -124,6 +122,10 @@
             </div>
             {% endif %} {% endif %}
       </div>
+      <br>
+      <br>
+      <br>
+      {%if user.is_authenticated%}
       <form class="" action="/buscarLiga/" method="POST">
             {% csrf_token %}
             <label for="inputEmail" class="sr-only">User</label>
@@ -131,6 +133,7 @@
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Buscar</button>
       </form>
+      {%endif%}
       <hr>
 
       <footer>

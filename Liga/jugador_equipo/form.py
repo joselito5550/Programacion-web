@@ -9,7 +9,7 @@ from .models import Equipo, Perfiles
 class UserForm(UserCreationForm, ModelForm):
     telefono = forms.IntegerField()
     equipo = forms.ModelChoiceField(
-        queryset=Equipo.objects.all(), empty_label="Elige un equipo")
+        queryset=Equipo.objects.all(),required=False, empty_label="Elige un equipo")
 
 
 class EquipoForm(ModelForm):

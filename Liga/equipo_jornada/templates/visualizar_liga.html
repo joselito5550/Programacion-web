@@ -5,7 +5,16 @@
       }
 </style>
 
+<h1>{{nombre_liga}}</h1>
 {%for equipo in equipos%}
 <h2>Nombre: {{equipo.nombre}} Puntos: {{equipo.puntos}}</h2>
-{%endfor%}
-{%endblock%}
+{%endfor%} {%if admin_equipo%}
+<form class="" action="/unirte_liga" method="POST">
+      {% csrf_token %}
+      <select class="form-control" name="nombre_liga">
+            <option value="{{nombre_liga}}">{{nombre_liga}}</option>
+      </select>
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Unirte a esta liga</button>
+</form>
+{%endif%} {%endblock%}

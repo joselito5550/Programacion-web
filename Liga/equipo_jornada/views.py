@@ -31,23 +31,28 @@ class Registrar_jornadas(FormView):
         jornada = form.save()
         return redirect('/')
 
+
 def administrar_liga(request):
 
-    return render(request,'administrador_liga.html', {})
+    return render(request, 'administrador_liga.html', {})
+
 
 def crear_jornadas(request):
-    return render(request,'administrador_liga.html', {})
+    return render(request, 'administrador_liga.html', {})
 
 # echarle un ojo para ver si funciona bien
-def buscar_liga(request,nombre_liga):
+
+
+def buscar_liga(request, nombre_liga):
     print nombre_liga
     if Liga.objects.filter(nombre=nombre_liga).exists():
         liga = Liga.objects.get(nombre=nombre_liga)
         print liga.nombre
         equipos_liga = Equipo.objects.filter(Liga=liga)
-        return render(request,'visualizar_liga',{'equipos':equipos_liga})
+        return render(request, 'visualizar_liga', {'equipos': equipos_liga})
     else:
-        return render(request,'principal.html',{})
+        return render(request, 'principal.html', {})
+
 
 def buscarLiga(request):
     if request.method == 'POST':
@@ -56,7 +61,15 @@ def buscarLiga(request):
         if Liga.objects.filter(nombre=nombre_liga).exists():
             liga = Liga.objects.get(nombre=nombre_liga)
             equipos_liga = Equipo.objects.filter(Liga=liga)
-            return render(request,'visualizar_liga.html',{'equipos':equipos_liga})
+            if Equipo.objects.get(administrador=request.user):
+                equipo = Equipo.objects.get(administrador=request.user)
+                if equipo.Liga == None:
+                    admin_equipo = True
+                else:
+                    admin_equipo = False
+            else:
+                admin_equipo = False
+            return render(request, 'visualizar_liga.html', {'nombre_liga':nombre_liga,'equipos': equipos_liga, 'admin_equipo': admin_equipo})
         else:
             return redirect('/')
     else:

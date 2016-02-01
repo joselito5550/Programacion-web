@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'^buscarLiga/$', buscarLiga),
     url(r'^jornadas$', views.crear_jornadas),
     url(r'^crear_una_jornada$', views.crear_una_jornada),
-    url(r'^resultado_jornada$', views.resultado_jornada)
+    url(r'^resultado_jornada$', views.resultado_jornada),
+    url(r'^unirte_liga$',views.unirte_liga),
     ]

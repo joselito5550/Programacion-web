@@ -53,19 +53,11 @@
                         </ul>
 
                         {% else %}
+                        <div class="navbar-right">
+                              <button type="button" class="btn btn-primary" href="/inicio_sesion" name="button"><a href="/inicio_sesion">Iniciar Sesion</a></button>
 
-                        <form class="navbar-form navbar-right" method="POST">
-                              {% csrf_token %}
-                              <div class="form-group">
-                                    <input name="username" type="text" placeholder="Email" class="form-control">
-                              </div>
-                              <div class="form-group">
-                                    <input name="password" type="password" placeholder="Password" class="form-control">
-                              </div>
-                              <button type="submit" class="btn btn-success">Sign in</button>
-                              <button type="button" class="btn btn-link"><a href="/registro">Registrarse</a></button>
-                              <button type="button" class="btn btn-link"><a href="/cerrar">Cerrar Sesión</a></button>
-                        </form>
+                        </div>
+
                         {% endif %}
                   </div>
                   <!--/.navbar-collapse -->

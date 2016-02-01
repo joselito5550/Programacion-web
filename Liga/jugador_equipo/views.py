@@ -50,7 +50,7 @@ def cerrar(request):
 class Registrarse(FormView):
     template_name = 'registrarse.html'
     form_class = UserForm
-    success_url = reverse_lazy('registrarse')
+    success_url = reverse_lazy('/')
 
     def form_valid(self, form):
         user = form.save()
@@ -81,20 +81,23 @@ def index(request):
             context['equipos'] = Equipo.objects.filter(
                 Liga=context['usuario'].equipo.Liga)
             context['tiene_equipo'] = True
+            context['jugadores'] = Perfiles.objects.filter(
+                    equipo=context['usuario'].equipo)
             if request.user == context['usuario'].equipo.administrador:
                 context['administrador_equipo'] = True
-                context['jugadores'] = Perfiles.objects.filter(
-                    equipo=context['usuario'].equipo)
             else:
                 context['administrador_equipo'] = False
                 print context['administrador_equipo']
-            if request.user == context['usuario'].equipo.Liga.administrador:
-                context['es_administrador_liga'] = True
-            else:
-                context['es_administrador_liga'] = False
+            if context['usuario'].equipo.Liga:
+                if request.user == context['usuario'].equipo.Liga.administrador:
+                    context['es_administrador_liga'] = True
+                else:
+                    context['es_administrador_liga'] = False
         else:
             context['equipo'] = "nada"
             context['tiene_equipo'] = False
+            context['administrador_equipo'] = False
+            context['es_administrador_liga'] = False
     return render(request, 'principal.html', {'context': context})
 
 
@@ -117,10 +120,10 @@ def unirte_equipo(request):
             usuario.save()
             context['usuario'] = usuario
             print "Equipo cambiado"
-            return render(request, 'principal.html', {'context': context})
+            return redirect('/')
     else:
         print "not request POST"
-        return render(request, 'principal.html', {'context': context})
+        return redirect('/')
 
 
 def crear_jornadas(request):
@@ -173,3 +176,14 @@ def resultado_jornada(request):
         context['jornadas'] = Jornada.objects.filter(
             Liga=Liga.objects.get(administrador=request.user))
         return render(request, 'resultado_jornada.html', {'context': context})
+
+
+def unirte_liga(request):
+    if request.method == "POST":
+        nombre_liga=request.POST.get('nombre_liga')
+        print nombre_liga
+        liga = Liga.objects.get(nombre=nombre_liga)
+        equipo = Equipo.objects.get(administrador=request.user)
+        equipo.Liga = liga
+        equipo.save()
+        return redirect('/')
