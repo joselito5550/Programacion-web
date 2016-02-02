@@ -8,7 +8,6 @@
       <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
       <meta name="description" content="">
       <meta name="author" content="">
-      <link rel="icon" href="../../favicon.ico">
       <style media="screen">
             body {
                   padding-bottom: 20px;
@@ -48,7 +47,6 @@
                         {% if user.is_authenticated %}
                         <p class="navbar-text navbar-right"><a href="/cerrar">Cerrar sesion</a></p>
                         <ul class="nav navbar-nav">
-                              <li class="active"><a href="#">Home</a></li>
                               <li><a href="/ver_equipos">Ver equipos</a></li>
                               <li><a href="/ver_jornadas">Ver Jornadas</a></li>
                               {% if not context.tiene_equipo%}

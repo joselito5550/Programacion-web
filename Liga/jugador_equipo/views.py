@@ -143,9 +143,10 @@ def crear_una_jornada(request):
         jornada = Jornada()
         jornada.equipo1 = Equipo.objects.get(nombre=nombre_equipo_1)
         jornada.equipo2 = Equipo.objects.get(nombre=nombre_equipo_2)
-        jornada.numero = 2
+        jornada.numero = request.POST.get('numero_jornada')
         jornada.fecha = request.POST.get('fecha')
-        jornada.Liga = context['usuario'].equipo.Liga
+        perfil = Perfiles.objects.get(usuario=request.user)
+        jornada.Liga = perfil.equipo.Liga
         jornada.save()
         return redirect('/')
 
@@ -187,3 +188,20 @@ def unirte_liga(request):
         equipo.Liga = liga
         equipo.save()
         return redirect('/')
+
+
+def ver_jornadas(request):
+    perfil = Perfiles.objects.get(usuario=request.user)
+    if perfil.equipo:
+        equipo = perfil.equipo
+        liga = equipo.Liga
+        if Jornada.objects.filter(Liga=liga).exists():
+            context['jornadas_liga'] = Jornada.objects.filter(Liga=liga)
+            context['hay_jornadas'] = True
+            return render(request, 'ver_jornadas.html',{'context':context})
+        else:
+            context['hay_jornadas'] = False
+            return render(request, 'ver_jornadas.html',{'context':context})
+    else:
+        context['hay_jornadas'] = False
+        return render(request, 'ver_jornadas.html',{'context':context})

@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^registrar_equipo$', views.Registrar_equipo.as_view(),
         name='registrar_equipo'),
     url(r'^registrar_liga$', Registrar_liga.as_view(), name='registrar_liga'),
+
+
     url(r'^crear_jornadas/$', Registrar_jornadas.as_view(), name='registrar_jornada'),
     url(r'^ver_equipos$', views.ver_equipos),
     url(r'^unirte_equipo$', views.unirte_equipo),
@@ -37,4 +39,5 @@ urlpatterns = [
     url(r'^crear_una_jornada$', views.crear_una_jornada),
     url(r'^resultado_jornada$', views.resultado_jornada),
     url(r'^unirte_liga$',views.unirte_liga),
+    url(r'^ver_jornadas$',views.ver_jornadas)
     ]

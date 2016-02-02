@@ -1,0 +1,20 @@
+{% extends 'base.html' %} {%block content%}
+<style media="screen">
+      .helptext {
+            display: none;
+      }
+</style>
+<h1>Jornadas</h1>
+{%if context.hay_jornadas%} {%for jornada in context.jornadas_liga%}
+<p>
+      {%if jornada.goles_primer_equipo%}
+
+      Jornada numero:   {{jornada.numero}} {{jornada.equipo1.nombre}} {{jornada.goles_primer_equipo}} - {{jornada.goles_segundo_equipo}} {{jornada.equipo2.nombre}} {{jornada.fecha}}
+
+      {%else%}
+
+      Jornada numero: {{jornada.numero}} {{jornada.equipo1.nombre}} - {{jornada.equipo2.nombre}} {{jornada.fecha}}
+
+      {%endif%}
+</p>
+<br> {%endfor%} {%endif%} {%endblock%}
